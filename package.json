@@ -1,0 +1,13 @@
+{
+  "name": "check-certs",
+  "version": "1.0.0",
+  "description": "Check remote https certificate expiry",
+  "bin": {
+    "check-certs": "./bin/check-certs"
+  },
+  "author": "dbanker",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.16.0"
+  }
+}

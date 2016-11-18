@@ -1,0 +1,24 @@
+#!/usr/bin/env node
+const check = require("../lib/check");
+const domains = process.argv.slice(2);
+const moment = require("moment");
+
+Promise.all(domains.map(domain=> check.domain(domain)))
+  .then(results=> {
+    domains.forEach((domain, idx) => {
+      if (typeof results[idx] === "string") {
+        return console.log(`⛔️   ${domain} (${results[idx]})`)
+      }
+      let marker;
+      let now = new moment();
+      if (now.diff(results[idx], 'seconds') > 1) {
+        marker = "⛔️"
+      } else if (now.diff(results[idx], 'months') > -2) {
+        marker = "⚠️"
+      } else {
+        marker = "✅"
+      }
+      console.log(`${marker}   ${domain} (${results[idx].format("MMM D YYYY, hh:mm:ss")})`)
+    });
+  })
+  .catch(err=> console.log(err))
